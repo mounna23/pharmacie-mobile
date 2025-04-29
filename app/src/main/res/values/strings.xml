@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">pharmacie</string>
+    <string name="app_logo">Logo de l\'application</string>
+    <string name="login_title">Connexion</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Mot de passe</string>
+    <string name="login_button">Se connecter</string>
+    <string name="signup_prompt">Pas de compte ? S\'inscrire</string>
+</resources>
