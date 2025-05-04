@@ -54,6 +54,14 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.10.1")
     implementation ("androidx.core:core-splashscreen:1.0.1" )
     implementation ("androidx.appcompat:appcompat:1.6.1")
+
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("com.squareup.picasso:picasso:2.71828")
+
 }
 
 

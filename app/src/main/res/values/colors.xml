@@ -16,8 +16,13 @@
     <color name="colorAccent">#4CAF93</color>
     <color name="splash_background">#328E6E</color>
 
+    <color name="text_hint">#FF808080</color>
+     <color name="light_gray"></color>
+    <color name="primaryColor">#328E6E</color>
+    <color name="accentColor">#4CAF50</color>
+    <color name="logoutColor">#F44336</color>
 
-
+    <color name="primary1">#4CAF93</color>
 
     <color name="background">#F5F9FF</color>
 

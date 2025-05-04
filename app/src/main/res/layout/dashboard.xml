@@ -41,19 +41,14 @@
             android:layout_height="300dp"
             android:layout_marginTop="16dp"/>
 
-        <!-- Graphique des fournisseurs -->
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chartFournisseurs"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="16dp"/>
 
-        <!-- Graphique des utilisateurs -->
+
+        <!-- Graphique des utilisateurs
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chartUtilisateurs"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"/>-->
 
     </LinearLayout>
 </ScrollView>

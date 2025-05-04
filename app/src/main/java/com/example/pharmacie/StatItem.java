@@ -1,5 +1,7 @@
 package com.example.pharmacie;
 
+
+
 public class StatItem {
     private String title;
     private String value;

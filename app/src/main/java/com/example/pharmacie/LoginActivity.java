@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Patterns;
 
+import com.example.pharmacie.models.AuthUtils;
 import com.example.pharmacie.models.AuthenticationRequest;
 import com.example.pharmacie.models.AuthenticationResponse;
 import com.example.pharmacie.retrofit.ApiClient;
@@ -102,9 +103,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleLoginSuccess(String token) {
-        Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, DashboardActivity.class));
-        finish();
+
+            if (token == null || token.isEmpty()) {
+                Toast.makeText(this, "Erreur: token vide", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // 1. Sauvegarde du token
+            AuthUtils.saveToken(this, token);
+
+            // 2. Redirection vers MainActivity
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+            // 3. Fermeture propre
+            finishAffinity();
     }
 
 
