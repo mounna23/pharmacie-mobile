@@ -7,7 +7,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.pharmacie.models.Medicament;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
@@ -47,8 +52,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     private boolean isExpired(Medicament medicament) {
-        // Implémentez la logique de vérification de date d'expiration
-        return false; // Remplacez par votre logique
+        try {
+            // Format: "2023-11-20T00:00:00.000+00:00"
+            String datePart = medicament.getDateExpiration().split("T")[0];
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date expiration = sdf.parse(datePart);
+            return expiration.before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private boolean isStockLow(Medicament medicament) {

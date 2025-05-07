@@ -43,6 +43,6 @@ public interface MedicamentApi {
 
     @DELETE("medicament/{id}")
     Call<Void> deleteMedicament(@Path("id") Long id);
-    @GET("medicaments/alerts")
+    @GET("alerts")
     Call<List<Medicament>> getMedicamentsAlerts();
 }

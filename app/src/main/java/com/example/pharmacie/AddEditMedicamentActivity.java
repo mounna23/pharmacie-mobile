@@ -2,6 +2,7 @@ package com.example.pharmacie;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -194,10 +195,13 @@ public class AddEditMedicamentActivity extends AppCompatActivity {
 
     private void uploadMedicamentWithImage() {
         try {
-            // Créer le fichier à partir de l'URI
-            File file = new File(FileUtils.getPath(this, imageUri));
+            String filePath = FileUtils.getPath(this, imageUri);
+            if (filePath == null) {
+                Toast.makeText(this, "Impossible de récupérer le fichier", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            File file = new File(filePath);
 
-            // Créer les parties du multipart
             RequestBody codeMedPart = RequestBody.create(MediaType.parse("text/plain"), codeMedEditText.getText().toString());
             RequestBody libellePart = RequestBody.create(MediaType.parse("text/plain"), libelleEditText.getText().toString());
             RequestBody dateExpPart = RequestBody.create(MediaType.parse("text/plain"), dateExpirationEditText.getText().toString());
@@ -219,10 +223,16 @@ public class AddEditMedicamentActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Medicament> call, Response<Medicament> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(AddEditMedicamentActivity.this, "Médicament ajouté avec succès", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEditMedicamentActivity.this, "Ajouté avec succès", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(AddEditMedicamentActivity.this, "Erreur: " + response.message(), Toast.LENGTH_SHORT).show();
+                        try {
+                            String error = response.errorBody().string();
+                            Log.e("API ERROR", error);
+                            Toast.makeText(AddEditMedicamentActivity.this, "Erreur: " + error, Toast.LENGTH_LONG).show();
+                        } catch (IOException e) {
+                            Toast.makeText(AddEditMedicamentActivity.this, "Erreur inconnue", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 
@@ -233,8 +243,21 @@ public class AddEditMedicamentActivity extends AppCompatActivity {
             });
 
         } catch (Exception e) {
-            Toast.makeText(this, "Erreur: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erreur interne: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
+    }
+
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String path = cursor.getString(column_index);
+        cursor.close();
+        return path;
     }
 
     private void uploadMedicamentWithoutImage() {
